@@ -15,8 +15,21 @@
         </p>
     {% endif %}
 
+    <div id="chessboard-container" class="mb-4"
+         data-piece="{{ piece }}"
+         data-start="{{ start_square }}"
+         data-end="{{ end_square }}"
+         data-path="{{ path|join(',') if path else '' }}">
+    </div>
+
     <div class="d-flex justify-content-center gap-3">
         <a href="{{ url_for(game_type) }}" class="btn btn-primary fw-bold">Play Again</a>
         <a href="{{ url_for('index') }}" class="btn btn-secondary fw-bold">Main Menu</a>
     </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="{{ url_for('static', filename='js/chessboard.js') }}"></script>
 {% endblock %}
