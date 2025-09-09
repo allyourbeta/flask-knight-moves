@@ -1,32 +1,52 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knight Training - ChessMind Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='premium-chess-styles.css') }}">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LP35D8LBWQ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-LP35D8LBWQ');
+    </script>
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-content">
+            <h1 class="game-title">Knight Training</h1>
 
-{% block title %}Knight's Moves - Chess Visualization{% endblock %}
+            {% if message %}
+                <div class="alert alert-danger">
+                    {{ message }}
+                </div>
+            {% endif %}
 
-{% block content %}
-    <h1 class="text-center mb-4">Knight's Moves</h1>
+            <div class="squares-container">
+                <div class="square-display">{{ square_a }}</div>
+                <div class="square-display">{{ square_b }}</div>
+            </div>
 
-    {% if message %}
-        <div class="alert alert-danger text-center mb-4">
-            {{ message }}
+            <div class="question-section">
+                <p class="question-text">How many moves does the knight need?</p>
+                
+                <form method="post" id="moveForm">
+                    <div class="options-grid">
+                        {% for i in range(1, 7) %}
+                            <button type="submit" name="user_moves" value="{{ i }}" class="option-button">{{ i }}</button>
+                        {% endfor %}
+                    </div>
+                </form>
+            </div>
+
+            <div class="navigation-section">
+                <a href="{{ url_for('index') }}" class="nav-link">← Back to Training</a>
+            </div>
         </div>
-    {% endif %}
-
-    <div class="d-flex justify-content-center gap-4 mb-4">
-        <div class="square-box d-flex justify-content-center align-items-center">{{ square_a }}</div>
-        <div class="square-box d-flex justify-content-center align-items-center">{{ square_b }}</div>
     </div>
-
-    <p class="text-center fw-bold mb-4">Select the number of moves required:</p>
-
-    <form method="post" id="moveForm">
-        <div class="d-flex justify-content-center flex-wrap gap-2 mb-4">
-            {% for i in range(1, 7) %}
-                <button type="submit" name="user_moves" value="{{ i }}" class="btn btn-outline-primary fw-bold">{{ i }}</button>
-            {% endfor %}
-        </div>
-    </form>
-
-    <div class="text-center">
-        <a href="{{ url_for('index') }}" class="btn btn-secondary fw-bold">Main Menu</a>
-    </div>
-{% endblock %}
+</body>
+</html>

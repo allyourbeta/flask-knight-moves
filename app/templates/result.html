@@ -1,33 +1,51 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training Result - ChessMind Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='premium-chess-styles.css') }}">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LP35D8LBWQ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-LP35D8LBWQ');
+    </script>
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-content">
+            <h1 class="game-title">Training Result</h1>
 
-{% block title %}Game Result - Chess Visualization{% endblock %}
+            <div class="alert {% if correct %}alert-success{% else %}alert-danger{% endif %}">
+                {{ message }}
+            </div>
 
-{% block content %}
-    <h1 class="text-center mb-4">Game Result</h1>
+            {% if piece == "Knight" and path %}
+                <div style="text-align: center; margin-bottom: 2rem; padding: 1.5rem; background: var(--surface-light); border-radius: 16px; border: 1px solid var(--border-subtle);">
+                    <p style="font-weight: 600; color: var(--accent-gold); margin-bottom: 0.5rem;">Optimal Path</p>
+                    <p style="font-size: 1.25rem; color: var(--text-primary); font-family: 'Inter', monospace;">{{ ' → '.join(path) }}</p>
+                </div>
+            {% endif %}
 
-    <div class="alert {% if correct %}alert-success{% else %}alert-danger{% endif %} text-center mb-4">
-        {{ message }}
+            <div id="chessboard-container" 
+                 data-piece="{{ piece }}"
+                 data-start="{{ start_square }}"
+                 data-end="{{ end_square }}"
+                 data-path="{{ path|join(',') if path else '' }}"
+                 style="margin-bottom: 2rem;">
+            </div>
+
+            <div class="navigation-section">
+                <a href="{{ url_for(game_type) }}" class="nav-link primary">Continue Training</a>
+                <a href="{{ url_for('index') }}" class="nav-link">Back to Menu</a>
+            </div>
+        </div>
     </div>
 
-    {% if piece == "Knight" and path %}
-        <p class="text-center mb-4">
-            Path: {{ ' -> '.join(path) }}
-        </p>
-    {% endif %}
-
-    <div id="chessboard-container" class="mb-4"
-         data-piece="{{ piece }}"
-         data-start="{{ start_square }}"
-         data-end="{{ end_square }}"
-         data-path="{{ path|join(',') if path else '' }}">
-    </div>
-
-    <div class="d-flex justify-content-center gap-3">
-        <a href="{{ url_for(game_type) }}" class="btn btn-primary fw-bold">Play Again</a>
-        <a href="{{ url_for('index') }}" class="btn btn-secondary fw-bold">Main Menu</a>
-    </div>
-{% endblock %}
-
-{% block extra_scripts %}
     <script src="{{ url_for('static', filename='js/chessboard.js') }}"></script>
-{% endblock %}
+</body>
+</html>
