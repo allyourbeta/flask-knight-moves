@@ -11,6 +11,24 @@ class KeyboardHandler {
         if (path.includes('knight_game')) return 'knight';
         if (path.includes('bishop_game')) return 'bishop';
         if (path.includes('color_game')) return 'color';
+        
+        // Check for result pages or infer from content
+        const title = document.title.toLowerCase();
+        const bodyText = document.body.textContent.toLowerCase();
+        
+        if (title.includes('knight') || bodyText.includes('knight')) return 'knight';
+        if (title.includes('bishop') || bodyText.includes('bishop')) return 'bishop';
+        if (title.includes('color') || title.includes('square color')) return 'color';
+        
+        // Check for result page with Continue Training link
+        const continueLinks = document.querySelectorAll('a[href*="_game"]');
+        if (continueLinks.length > 0) {
+            const href = continueLinks[0].href;
+            if (href.includes('knight_game')) return 'knight';
+            if (href.includes('bishop_game')) return 'bishop';
+            if (href.includes('color_game')) return 'color';
+        }
+        
         return null;
     }
     
@@ -161,6 +179,13 @@ class KeyboardHandler {
             if (primaryLink) {
                 this.highlightButton(primaryLink);
                 setTimeout(() => primaryLink.click(), 100);
+            }
+        } else {
+            // Fallback: look for any link that goes back to a game
+            const gameLinks = document.querySelectorAll('a[href*="_game"]');
+            if (gameLinks.length > 0) {
+                this.highlightButton(gameLinks[0]);
+                setTimeout(() => gameLinks[0].click(), 100);
             }
         }
     }
