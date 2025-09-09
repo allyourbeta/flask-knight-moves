@@ -24,9 +24,9 @@
                 {{ message }}
             </div>
 
-            {% if piece == "Knight" and path %}
+            {% if (piece == "Knight" or piece == "Bishop") and path %}
                 <div style="text-align: center; margin-bottom: 2rem; padding: 1.5rem; background: var(--surface-light); border-radius: 16px; border: 1px solid var(--border-subtle);">
-                    <p style="font-weight: 600; color: var(--accent-gold); margin-bottom: 0.5rem;">Optimal Path</p>
+                    <p style="font-weight: 600; color: var(--accent-gold); margin-bottom: 0.5rem;">{% if piece == "Knight" %}Optimal Path{% else %}Movement Path{% endif %}</p>
                     <p style="font-size: 1.25rem; color: var(--text-primary); font-family: 'Inter', monospace;">{{ ' → '.join(path) }}</p>
                 </div>
             {% endif %}

@@ -545,6 +545,22 @@ body {
     background: rgba(231, 76, 60, 0.1);
     color: #e74c3c;
     border-color: rgba(231, 76, 60, 0.3);
+    animation: pulseError 0.6s ease-in-out;
+}
+
+@keyframes pulseError {
+    0% { 
+        transform: scale(1);
+        background: rgba(231, 76, 60, 0.2);
+    }
+    50% { 
+        transform: scale(1.02);
+        background: rgba(231, 76, 60, 0.15);
+    }
+    100% { 
+        transform: scale(1);
+        background: rgba(231, 76, 60, 0.1);
+    }
 }
 
 /* Chessboard Styles - Enhanced for Premium Theme */
