@@ -675,29 +675,26 @@ body {
   }
 
   .squares-container {
-    gap: 2rem;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1.5rem;
   }
 
   .square-display {
-    width: 100px;
-    height: 100px;
-    font-size: 2rem;
-  }
-
-  .game-title {
-    font-size: 2rem;
-  }
-
-  .question-text {
-    font-size: 1.25rem;
+    width: 90px;
+    height: 90px;
+    font-size: 1.8rem;
   }
 
   .options-grid {
-    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
   }
 
   .option-button {
-    padding: 0.875rem 1.25rem;
+    min-width: 65px;
+    padding: 0.75rem 1rem;
     font-size: 1.1rem;
   }
 
@@ -733,16 +730,22 @@ body {
     border-radius: 15px;
   }
 
-  .squares-container {
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
+  .game-title {
+    font-size: 2rem;
   }
 
-  .square-display {
-    width: 90px;
-    height: 90px;
-    font-size: 1.75rem;
+  .question-text {
+    font-size: 1.25rem;
+  }
+
+  .options-grid {
+    gap: 0.5rem;
+  }
+
+  .option-button {
+    min-width: 60px;
+    padding: 0.75rem 1rem;
+    font-size: 1.1rem;
   }
 
   .mini-chessboard {
