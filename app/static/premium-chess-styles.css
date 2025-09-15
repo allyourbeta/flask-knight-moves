@@ -181,12 +181,13 @@ body {
 
 .training-card {
   background: var(--surface-dark);
-  border: 1px solid var(--border-subtle);
+  border: 2px solid transparent;
   border-radius: 20px;
   padding: 2rem;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .training-card::before {
@@ -195,20 +196,50 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  height: 4px;
+  height: 5px;
   background: var(--accent-gold);
   transform: scaleX(0);
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, height 0.3s ease;
+  z-index: 2;
 }
 
 .training-card:hover {
   transform: translateY(-8px);
   border-color: var(--accent-gold);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.1);
+  border-width: 3px;
+  z-index: 1;
 }
 
 .training-card:hover::before {
   transform: scaleX(1);
+  height: 6px;
+}
+
+.training-card .card-content {
+  transition: transform 0.3s ease;
+}
+
+.training-card:hover .card-content {
+  transform: scale(1.02);
+}
+
+.color-card:hover {
+  border-color: var(--color-color);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.1),
+    0 0 0 2px rgba(255, 255, 255, 0.1);
+}
+
+.bishop-card:hover {
+  border-color: var(--bishop-color);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.1),
+    0 0 0 2px rgba(255, 255, 255, 0.1);
+}
+
+.knight-card:hover {
+  border-color: var(--knight-color);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.1),
+    0 0 0 2px rgba(255, 255, 255, 0.1);
 }
 
 .card-header {
