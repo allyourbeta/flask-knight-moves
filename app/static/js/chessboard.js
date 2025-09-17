@@ -149,18 +149,6 @@ class MiniChessboard {
     boardContainer.appendChild(svg);
     this.svg = svg;
 
-    // Add title
-    const title = document.createElement("div");
-    title.style.cssText = `
-            text-align: center;
-            margin-bottom: 15px;
-            font-weight: 600;
-            font-size: 16px;
-            color: #2c3e50;
-        `;
-    title.textContent = `${this.piece} Possible Path`;
-
-    this.container.appendChild(title);
     this.container.appendChild(boardContainer);
   }
 
