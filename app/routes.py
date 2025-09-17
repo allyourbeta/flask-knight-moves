@@ -184,7 +184,7 @@ def bishop_game():
 
         if user_moves == correct_moves:
             if correct_moves == -1:
-                message = f"Correct! The Bishop cannot move from {square_a} to {square_b} because it cannot change square colors."
+                message = "Correct. The Bishop cannot change colors."
             else:
                 message = f"Correct! The Bishop can move from {square_a} to {square_b} in {correct_moves} move{'s' if correct_moves != 1 else ''}."
             return render_template('result.html', correct=True, message=message,
