@@ -158,7 +158,7 @@ class MiniChessboard {
             font-size: 16px;
             color: #2c3e50;
         `;
-    title.textContent = `${this.piece} Move Visualization`;
+    title.textContent = `${this.piece} Possible Path`;
 
     this.container.appendChild(title);
     this.container.appendChild(boardContainer);

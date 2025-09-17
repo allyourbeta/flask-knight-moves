@@ -1,137 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ChessMind Pro - Blindfold Training</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='premium-chess-styles.css') }}">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='premium-chess-styles.css') }}"
+    />
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LP35D8LBWQ"></script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-LP35D8LBWQ"
+    ></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-LP35D8LBWQ');
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-LP35D8LBWQ");
     </script>
-</head>
-<body>
+  </head>
+  <body>
     <div class="app-wrapper">
-        <div class="background-pattern"></div>
-        
-        <header class="main-header">
-            <div class="header-container">
-                <div class="brand">
-                    <div class="brand-icon">♔</div>
-                    <div class="brand-text">
-                        <h1 class="brand-title">ChessMind Pro</h1>
-                        <p class="brand-subtitle">Professional Blindfold Training</p>
-                    </div>
-                </div>
-                
-                <div class="header-stats">
-                    <div class="stat-item">
-                        <span class="stat-number">2,847</span>
-                        <span class="stat-label">Players</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number">15,293</span>
-                        <span class="stat-label">Sessions</span>
-                    </div>
-                </div>
+      <div class="background-pattern"></div>
+
+      <header class="main-header">
+        <div class="header-container">
+          <div class="brand">
+            <div class="brand-icon">♔</div>
+            <div class="brand-text">
+              <h1 class="brand-title">ChessMind Pro</h1>
+              <p class="brand-subtitle">Professional Blindfold Training</p>
             </div>
-        </header>
+          </div>
 
-        <main class="main-content">
-            <div class="content-container">
-                <section class="intro-section">
-                    <h2 class="section-title">Master Chess Visualization</h2>
-                    <p class="section-description">
-                        Develop the mental skills that separate masters from amateurs. 
-                        Train your ability to see the board without looking.
-                    </p>
-                </section>
-
-                <section class="training-section">
-                    <div class="training-grid">
-                        <div class="training-card color-card">
-                            <div class="card-header">
-                                <div class="piece-icon color-icon">◼</div>
-                                <div class="difficulty-badge beginner">Foundation</div>
-                            </div>
-                            <div class="card-content">
-                                <h3 class="card-title">Square Recognition</h3>
-                                <p class="card-description">
-                                    Master square colors through repetition, until they're second nature.
-                                </p>
-                                <div class="card-stats">
-                                    <span class="stat">⚡ Instant recall</span>
-                                    <span class="stat">🧠 Memory building</span>
-                                </div>
-                            </div>
-                            <div class="card-footer">
-                                <a href="{{ url_for('color_game') }}" class="training-button color-button">
-                                    <span>Begin Training</span>
-                                    <svg class="button-arrow" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="training-card bishop-card">
-                            <div class="card-header">
-                                <div class="piece-icon bishop-icon">♝</div>
-                                <div class="difficulty-badge intermediate">Intermediate</div>
-                            </div>
-                            <div class="card-content">
-                                <h3 class="card-title">Bishop Mastery</h3>
-                                <p class="card-description">
-                                    Internalize diagonal movement patterns - an essential tactical and endgame skill.
-                                </p>
-                                <div class="card-stats">
-                                    <span class="stat">📐 Diagonal vision</span>
-                                    <span class="stat">🔄 Pattern mastery</span>
-                                </div>
-                            </div>
-                            <div class="card-footer">
-                                <a href="{{ url_for('bishop_game') }}" class="training-button bishop-button">
-                                    <span>Begin Training</span>
-                                    <svg class="button-arrow" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="training-card knight-card">
-                            <div class="card-header">
-                                <div class="piece-icon knight-icon">♞</div>
-                                <div class="difficulty-badge advanced">Advanced</div>
-                            </div>
-                            <div class="card-content">
-                                <h3 class="card-title">Knight Pathfinding</h3>
-                                <p class="card-description">
-                                    Knights are toughest. Hard work here pays off in blitz and bullet.
-                                </p>
-                                <div class="card-stats">
-                                    <span class="stat">⚡ Quick thinking</span>
-                                    <span class="stat">🎯 Precision training</span>
-                                </div>
-                            </div>
-                            <div class="card-footer">
-                                <a href="{{ url_for('knight_game') }}" class="training-button knight-button">
-                                    <span>Begin Training</span>
-                                    <svg class="button-arrow" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+          <div class="header-stats">
+            <div class="stat-item">
+              <span class="stat-number">2,847</span>
+              <span class="stat-label">Players</span>
             </div>
-        </main>
+            <div class="stat-item">
+              <span class="stat-number">15,293</span>
+              <span class="stat-label">Sessions</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="main-content">
+        <div class="content-container">
+          <section class="intro-section">
+            <h2 class="section-title">Master Chess Visualization</h2>
+            <p class="section-description">
+              Develop the mental skills that separate masters from amateurs.
+              Train your ability to see the board without looking.
+            </p>
+          </section>
+
+          <section class="training-section">
+            <div class="training-grid">
+              <div class="training-card color-card">
+                <div class="card-header">
+                  <div class="piece-icon color-icon">◼</div>
+                  <div class="difficulty-badge beginner">Foundation</div>
+                </div>
+                <div class="card-content">
+                  <h3 class="card-title">Square Recognition</h3>
+                  <p class="card-description">
+                    Know ze squares, or you vill know ze end of my lit cigar!
+                    -A. Nimzowitch
+                  </p>
+                  <div class="card-stats">
+                    <span class="stat">⚡ Instant recall</span>
+                    <span class="stat">🧠 Memory building</span>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <a
+                    href="{{ url_for('color_game') }}"
+                    class="training-button color-button"
+                  >
+                    <span>Begin Training</span>
+                    <svg
+                      class="button-arrow"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <path
+                        d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"
+                      />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+
+              <div class="training-card bishop-card">
+                <div class="card-header">
+                  <div class="piece-icon bishop-icon">♝</div>
+                  <div class="difficulty-badge intermediate">Intermediate</div>
+                </div>
+                <div class="card-content">
+                  <h3 class="card-title">Bishop Mastery</h3>
+                  <p class="card-description">
+                    Bishops should stay on their own color and away from little
+                    boys. -La papa
+                  </p>
+                  <div class="card-stats">
+                    <span class="stat">📐 Diagonal vision</span>
+                    <span class="stat">🔄 Pattern mastery</span>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <a
+                    href="{{ url_for('bishop_game') }}"
+                    class="training-button bishop-button"
+                  >
+                    <span>Begin Training</span>
+                    <svg
+                      class="button-arrow"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <path
+                        d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"
+                      />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+
+              <div class="training-card knight-card">
+                <div class="card-header">
+                  <div class="piece-icon knight-icon">♞</div>
+                  <div class="difficulty-badge advanced">Advanced</div>
+                </div>
+                <div class="card-content">
+                  <h3 class="card-title">Knight Pathfinding</h3>
+                  <p class="card-description">
+                    If I remembered how these moved, I would be the GOAT.
+                    -Magnoose
+                  </p>
+                  <div class="card-stats">
+                    <span class="stat">⚡ Quick thinking</span>
+                    <span class="stat">🎯 Precision training</span>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <a
+                    href="{{ url_for('knight_game') }}"
+                    class="training-button knight-button"
+                  >
+                    <span>Begin Training</span>
+                    <svg
+                      class="button-arrow"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <path
+                        d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"
+                      />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
     </div>
-</body>
+  </body>
 </html>
