@@ -97,6 +97,7 @@ body {
   align-items: center;
   justify-content: center;
   color: var(--primary-dark);
+  font-size: 2rem;
 }
 
 .brand-icon svg {
