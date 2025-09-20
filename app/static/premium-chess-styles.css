@@ -299,10 +299,10 @@ body {
 }
 
 .difficulty-badge {
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 600;
+  padding: 0.875rem 1.75rem;
+  border-radius: 24px;
+  font-size: 1.25rem;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -740,6 +740,11 @@ body {
     width: 280px !important;
     height: 280px !important;
   }
+
+  .difficulty-badge {
+    padding: 0.75rem 1.5rem;
+    font-size: 1.125rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -783,6 +788,11 @@ body {
   .mini-chessboard {
     width: 250px !important;
     height: 250px !important;
+  }
+
+  .difficulty-badge {
+    padding: 0.625rem 1.25rem;
+    font-size: 1rem;
   }
 }
 
