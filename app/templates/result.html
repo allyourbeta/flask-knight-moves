@@ -3,7 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Training Result - ChessMind Pro</title>
+    <title>
+      {% if correct %}Flawless Victory!{% else %}Training Result{% endif %} -
+      ChessMind Pro
+    </title>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap"
       rel="stylesheet"
@@ -29,7 +32,9 @@
   <body>
     <div class="game-container">
       <div class="game-content">
-        <h1 class="game-title">Training Result</h1>
+        <h1 class="game-title">
+          {% if correct %}Flawless Victory!{% else %}Training Result{% endif %}
+        </h1>
 
         <div
           class="alert {% if correct %}alert-success{% else %}alert-danger{% endif %}"

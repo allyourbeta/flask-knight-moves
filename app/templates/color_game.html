@@ -1,52 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Square Color Training - ChessMind Pro</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='premium-chess-styles.css') }}">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='premium-chess-styles.css') }}"
+    />
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LP35D8LBWQ"></script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-LP35D8LBWQ"
+    ></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-LP35D8LBWQ');
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-LP35D8LBWQ");
     </script>
-</head>
-<body>
+  </head>
+  <body>
     <div class="game-container">
-        <div class="game-content">
-            <h1 class="game-title">Square Color Training</h1>
+      <div class="game-content">
+        <h1 class="game-title">Square Color Training</h1>
 
-            {% if message %}
-                <div class="alert alert-danger">
-                    {{ message }}
-                </div>
-            {% endif %}
+        {% if message %}
+        <div class="alert alert-danger">{{ message }}</div>
+        {% endif %}
 
-            <div class="squares-container">
-                <div class="square-display">{{ square }}</div>
-            </div>
-
-            <div class="question-section">
-                <p class="question-text">What color is this square?</p>
-                
-                <form method="post" id="colorForm">
-                    <div class="options-grid">
-                        <button type="submit" name="color" value="white" class="option-button" style="background: #ffffff; color: #1a1a1a; border: 2px solid var(--border-subtle);">White</button>
-                        <button type="submit" name="color" value="black" class="option-button" style="background: #1a1a1a; color: #ffffff; border: 2px solid var(--border-subtle);">Black</button>
-                    </div>
-                </form>
-            </div>
-
-            <div class="navigation-section">
-                <a href="{{ url_for('index') }}" class="nav-link">← Back to Training</a>
-            </div>
+        <div class="squares-container">
+          <div class="square-display">{{ square }}</div>
         </div>
+
+        <div class="question-section">
+          <p class="question-text">What color is this square?</p>
+
+          <form method="post" id="colorForm">
+            <div class="options-grid">
+              <button
+                type="submit"
+                name="color"
+                value="light"
+                class="option-button"
+                style="
+                  background: #ffffff;
+                  color: #1a1a1a;
+                  border: 2px solid var(--border-subtle);
+                "
+              >
+                Light
+              </button>
+              <button
+                type="submit"
+                name="color"
+                value="dark"
+                class="option-button"
+                style="
+                  background: #1a1a1a;
+                  color: #ffffff;
+                  border: 2px solid var(--border-subtle);
+                "
+              >
+                Dark
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="navigation-section">
+          <a href="{{ url_for('index') }}" class="nav-link"
+            >← Back to Training</a
+          >
+        </div>
+      </div>
     </div>
     <script src="{{ url_for('static', filename='js/keyboard-input.js') }}"></script>
     <script src="{{ url_for('static', filename='js/auto-advance.js') }}"></script>
-</body>
+  </body>
 </html>

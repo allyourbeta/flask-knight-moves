@@ -127,7 +127,7 @@ def knight_game():
         path = session.get('path')
 
         if user_moves == correct_moves:
-            message = f"Correct! The Knight can move from {square_a} to {square_b} in {correct_moves} move{'s' if correct_moves != 1 else ''}."
+            message = f"Correct. The Knight can move from {square_a} to {square_b} in {correct_moves} move{'s' if correct_moves != 1 else ''}."
             return render_template('result.html', correct=True, message=message,
                                    square_a=square_a, square_b=square_b,
                                    correct_moves=correct_moves, piece="Knight",
@@ -138,13 +138,13 @@ def knight_game():
             session['knight_attempts'] = attempt_count
             
             if attempt_count == 1:
-                error_message = "Incorrect. Try again!"
+                error_message = "Incorrect. Try again."
             elif attempt_count == 2:
                 error_message = "Still incorrect. Think about the knight's L-shaped moves."
             elif attempt_count == 3:
                 error_message = "Not quite right. Remember, knights move in an L: 2 squares in one direction, 1 in perpendicular."
             else:
-                error_message = f"Incorrect attempt #{attempt_count}. Keep trying - you've got this!"
+                error_message = f"Incorrect attempt #{attempt_count}. Keep trying - you've got this."
             
             return render_template('knight_game.html', square_a=square_a, square_b=square_b, message=error_message)
 
@@ -186,7 +186,7 @@ def bishop_game():
             if correct_moves == -1:
                 message = "Correct. The Bishop cannot change colors."
             else:
-                message = f"Correct! The Bishop can move from {square_a} to {square_b} in {correct_moves} move{'s' if correct_moves != 1 else ''}."
+                message = f"Correct. The Bishop can move from {square_a} to {square_b} in {correct_moves} move{'s' if correct_moves != 1 else ''}."
             return render_template('result.html', correct=True, message=message,
                                    square_a=square_a, square_b=square_b,
                                    correct_moves=correct_moves, piece="Bishop",
@@ -198,13 +198,13 @@ def bishop_game():
             session['bishop_attempts'] = attempt_count
             
             if attempt_count == 1:
-                error_message = "Incorrect. Try again!"
+                error_message = "Incorrect. Try again."
             elif attempt_count == 2:
                 error_message = "Still incorrect. Think about diagonal movement patterns."
             elif attempt_count == 3:
                 error_message = "Not quite right. Bishops only move diagonally and can't change square colors."
             else:
-                error_message = f"Incorrect attempt #{attempt_count}. Consider the diagonal paths!"
+                error_message = f"Incorrect attempt #{attempt_count}. Consider the diagonal paths."
             
             return render_template('bishop_game.html', square_a=square_a, square_b=square_b, message=error_message)
 
@@ -251,7 +251,7 @@ def color_game():
         square = session.get('square')
 
         if user_color == correct_color:
-            message = f"Correct! {square} is {correct_color}."
+            message = f"Correct. {square} is a {correct_color} square."
             return render_template('result.html', correct=True, message=message,
                                    square_a=square, correct_color=correct_color,
                                    start_square=square, end_square=square,
@@ -262,13 +262,13 @@ def color_game():
             session['color_attempts'] = attempt_count
             
             if attempt_count == 1:
-                error_message = "Incorrect. Try again!"
+                error_message = "Incorrect. Try again."
             elif attempt_count == 2:
                 error_message = "Still incorrect. Think about the checkerboard pattern."
             elif attempt_count == 3:
                 error_message = "Not quite right. Remember: a1 is a dark square, pattern alternates from there."
             else:
-                error_message = f"Incorrect attempt #{attempt_count}. Visualize the board pattern!"
+                error_message = f"Incorrect attempt #{attempt_count}. Visualize the board pattern."
             
             return render_template('color_game.html', square=square, message=error_message)
 
@@ -280,7 +280,7 @@ def color_game():
     # Determine the correct color
     file_index = files.index(square[0])
     rank_index = int(square[1]) - 1
-    correct_color = 'black' if (file_index + rank_index) % 2 == 0 else 'white'  # Fixed color determination
+    correct_color = 'dark' if (file_index + rank_index) % 2 == 0 else 'light'  # Fixed color determination
 
     # Store the correct answer in the session
     session['correct_color'] = correct_color
