@@ -35,7 +35,22 @@
           <div class="brand">
             <div class="brand-icon">♔</div>
             <div class="brand-text">
-              <h1 class="brand-title">Disquastung Chess Training</h1>
+              <h1 class="brand-title">
+                Disquastung Chess Training
+                <span class="tooltip">
+                  ℹ️
+                  <span class="tooltiptext">
+                    "I conclude by suggesting three simple blindfold exercises
+                    that might improve your visualization of the board and thus
+                    your ability to see colour complexes."
+                    <div class="attribution">
+                      <span class="highlight"
+                        >GM Axel Smith, <em>Light & Dark Magic</em></span
+                      >
+                    </div>
+                  </span>
+                </span>
+              </h1>
               <p class="brand-subtitle">Start the Procedure</p>
             </div>
           </div>
@@ -162,5 +177,6 @@
         </div>
       </main>
     </div>
+    <script src="{{ url_for('static', filename='js/tooltip.js') }}"></script>
   </body>
 </html>

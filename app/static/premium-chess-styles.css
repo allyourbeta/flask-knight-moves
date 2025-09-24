@@ -1,3 +1,77 @@
+/* --- Tooltip Styles --- */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 0.7em;
+  color: rgba(255, 215, 0, 0.8);
+  cursor: pointer;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  opacity: 0;
+  width: 280px; /* Slightly wider to accommodate larger text */
+  background-color: #2c3e50;
+  color: #fff;
+  text-align: center;
+  font-family: "Playfair Display", serif;
+  font-size: 1rem; /* INCREASED from 0.9rem */
+  line-height: 1.6; /* INCREASED from 1.4 */
+  padding: 12px; /* Adjusted padding */
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  z-index: 10;
+  top: 150%;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+/* Style for highlighted text inside the tooltip */
+.tooltip .highlight {
+  color: var(--accent-gold, #d4af37); /* Use CSS variable with fallback */
+  font-weight: 600;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent #2c3e50 transparent;
+}
+
+.tooltip.tooltip-visible .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+/* Style for the attribution line in the tooltip */
+.tooltip .attribution {
+  margin-top: 8px; /* This adds the space */
+  display: block; /* Ensures it's on its own line */
+}
+
+/* Mobile positioning fix */
+@media (max-width: 480px) {
+  .tooltip .tooltiptext {
+    /* Shift left by 80% of its width instead of 50% */
+    transform: translateX(-80%);
+  }
+}
+
 /* Premium Chess Design - Complete CSS */
 
 * {
