@@ -61,20 +61,8 @@ def bishop_path(start, end):
     if dx == 0 and dy == 0:
         return [start]  # Same square
     
-    # Calculate step direction
-    step_x = 1 if dx > 0 else -1
-    step_y = 1 if dy > 0 else -1
-    
-    path = [start]
-    current_x, current_y = start_x, start_y
-    
-    # Move diagonally step by step
-    while current_x != end_x and current_y != end_y:
-        current_x += step_x
-        current_y += step_y
-        path.append(coord_to_square(current_x, current_y))
-    
-    return path
+    # For single-move paths, only return start and end squares
+    return [start, end]
 
 def knight_path(start, end):
     def valid_moves(x, y):
@@ -216,6 +204,7 @@ def bishop_game():
     while square_b == square_a:
         square_b = random.choice(files) + random.choice(ranks)
 
+
     file_diff = abs(files.index(square_a[0]) - files.index(square_b[0]))
     rank_diff = abs(int(square_a[1]) - int(square_b[1]))
 
@@ -240,7 +229,6 @@ def bishop_game():
     session['bishop_attempts'] = 0  # Reset attempt counter for new game
 
     return render_template('bishop_game.html', square_a=square_a, square_b=square_b)
-
 
 
 @app.route('/color_game', methods=['GET', 'POST'])
