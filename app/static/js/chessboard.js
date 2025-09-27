@@ -135,18 +135,27 @@ class MiniChessboard {
       "http://www.w3.org/2000/svg",
       "marker"
     );
+
+    // Make arrowhead size relative to the square size
+    const markerWidth = Math.max(5, this.squareSize / 8); // e.g., ~9px on desktop, smaller on mobile
+    const markerHeight = markerWidth * 0.7; // Maintain the aspect ratio
+
     marker.setAttribute("id", "arrowhead");
-    marker.setAttribute("markerWidth", "10");
-    marker.setAttribute("markerHeight", "7");
-    marker.setAttribute("refX", "9");
-    marker.setAttribute("refY", "3.5");
+    marker.setAttribute("markerWidth", markerWidth);
+    marker.setAttribute("markerHeight", markerHeight);
+    marker.setAttribute("refX", markerWidth - 1); // Adjust reference point
+    marker.setAttribute("refY", markerHeight / 2);
     marker.setAttribute("orient", "auto");
 
     const polygon = document.createElementNS(
       "http://www.w3.org/2000/svg",
       "polygon"
     );
-    polygon.setAttribute("points", "0 0, 10 3.5, 0 7");
+    // Use dynamic points for the polygon shape
+    polygon.setAttribute(
+      "points",
+      `0 0, ${markerWidth} ${markerHeight / 2}, 0 ${markerHeight}`
+    );
     polygon.setAttribute("fill", "#2196F3");
     polygon.setAttribute("stroke", "#1976D2");
     polygon.setAttribute("stroke-width", "1");
