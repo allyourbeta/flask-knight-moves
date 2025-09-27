@@ -8,6 +8,13 @@
   cursor: pointer;
 }
 
+/* Increase square label font size on larger screens */
+@media (min-width: 769px) {
+  .chess-square {
+    font-size: 0.875rem !important; /* 14px / 16px = 0.875rem */
+  }
+}
+
 .tooltip .tooltiptext {
   visibility: hidden;
   opacity: 0;
