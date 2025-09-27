@@ -829,8 +829,6 @@ body {
   }
 
   .mini-chessboard {
-    width: 280px !important;
-    height: 280px !important;
   }
 
   .difficulty-badge {
@@ -878,8 +876,6 @@ body {
   }
 
   .mini-chessboard {
-    width: 250px !important;
-    height: 250px !important;
   }
 
   .difficulty-badge {
@@ -891,8 +887,6 @@ body {
 /* Ultra small screens */
 @media (max-width: 360px) {
   .mini-chessboard {
-    width: 220px !important;
-    height: 220px !important;
   }
 }
 

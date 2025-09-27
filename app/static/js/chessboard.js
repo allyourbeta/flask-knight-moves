@@ -3,7 +3,7 @@ class MiniChessboard {
   constructor(containerId) {
     this.container = document.getElementById(containerId);
     this.boardSize = this.getResponsiveBoardSize();
-    this.squareSize = this.boardSize / 8;
+    this.squareSize = (this.boardSize - 6) / 8; // Account for 3px border on each side
     this.piece = null;
     this.startSquare = null;
     this.endSquare = null;
@@ -78,8 +78,16 @@ class MiniChessboard {
                     position: absolute;
                     left: ${col * this.squareSize}px;
                     top: ${row * this.squareSize}px;
-                    width: ${this.squareSize}px;
-                    height: ${this.squareSize}px;
+                    width: ${
+                      col === 7
+                        ? this.boardSize - 6 - col * this.squareSize
+                        : this.squareSize
+                    }px;
+                    height: ${
+                      row === 7
+                        ? this.boardSize - 6 - row * this.squareSize
+                        : this.squareSize
+                    }px;
                     background: ${isLight ? "#f0d9b5" : "#b58863"};
                     display: flex;
                     align-items: center;
