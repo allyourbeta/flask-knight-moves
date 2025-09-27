@@ -182,6 +182,33 @@ class MiniChessboard {
   drawPath() {
     if (!this.svg || this.path.length < 2) return;
 
+    // Add a dot at the start of the path for clarity
+    const startPoint = this.squareToPixel(this.path[0]);
+    const dot = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "circle"
+    );
+    dot.setAttribute("cx", startPoint.x);
+    dot.setAttribute("cy", startPoint.y);
+    dot.setAttribute("r", Math.max(3, this.squareSize / 12)); // CORRECTED: squareSize
+    dot.setAttribute("fill", "#2196F3");
+    dot.setAttribute("stroke", "#1976D2");
+    dot.setAttribute("stroke-width", "1");
+    dot.setAttribute("opacity", "0");
+
+    const dotAnimate = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "animate"
+    );
+    dotAnimate.setAttribute("attributeName", "opacity");
+    dotAnimate.setAttribute("values", "0;1");
+    dotAnimate.setAttribute("dur", "0.5s");
+    dotAnimate.setAttribute("begin", "0s"); // Appear with the first arrow
+    dotAnimate.setAttribute("fill", "freeze");
+
+    dot.appendChild(dotAnimate);
+    this.svg.appendChild(dot);
+
     // Draw arrows between consecutive squares in path
     for (let i = 0; i < this.path.length - 1; i++) {
       const from = this.squareToPixel(this.path[i]);
