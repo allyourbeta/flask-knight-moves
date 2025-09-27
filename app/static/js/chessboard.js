@@ -105,11 +105,9 @@ class MiniChessboard {
         if (squareName === this.startSquare) {
           square.style.background = "#4CAF50";
           square.style.boxShadow = "inset 0 0 10px rgba(76, 175, 80, 0.7)";
-          square.innerHTML = `<div style="color: white; font-weight: bold; font-size: 12px;">START</div>`;
         } else if (squareName === this.endSquare) {
           square.style.background = "#f44336";
           square.style.boxShadow = "inset 0 0 10px rgba(244, 67, 54, 0.7)";
-          square.innerHTML = `<div style="color: white; font-weight: bold; font-size: 12px;">END</div>`;
         } else if (this.path.includes(squareName)) {
           square.style.background = "#FF9800";
           square.style.boxShadow = "inset 0 0 8px rgba(255, 152, 0, 0.7)";
