@@ -13,6 +13,16 @@ class MiniChessboard {
   }
 
   getResponsiveBoardSize() {
+    // If the container exists, base the size on its actual rendered width.
+    if (this.container && this.container.clientWidth > 0) {
+      const availableWidth = this.container.clientWidth;
+      // Find the largest multiple of 8 that fits.
+      const adjustedSize = Math.floor(availableWidth / 8) * 8;
+      // Use a sensible minimum size.
+      return Math.max(adjustedSize, 160); // 160px is 20px per square
+    }
+
+    // Fallback to original logic if container isn't ready (e.g., during initial load).
     const screenWidth = window.innerWidth;
     let baseSize;
     if (screenWidth <= 360) baseSize = 220;
@@ -20,10 +30,7 @@ class MiniChessboard {
     else if (screenWidth <= 768) baseSize = 280;
     else baseSize = 300;
 
-    // Ensure the inner size is divisible by 8 to avoid fractional square sizes
     const adjustedInnerSize = Math.floor(baseSize / 8) * 8;
-
-    // Return the total board size including borders
     return adjustedInnerSize;
   }
 
@@ -71,11 +78,7 @@ class MiniChessboard {
                     position: absolute;
                     left: ${col * this.squareSize}px;
                     top: ${row * this.squareSize}px;
-                    width: ${
-                      col === 7
-                        ? this.boardSize - col * this.squareSize
-                        : this.squareSize
-                    }px;
+                    width: ${this.squareSize}px;
                     height: ${this.squareSize}px;
                     background: ${isLight ? "#f0d9b5" : "#b58863"};
                     display: flex;
