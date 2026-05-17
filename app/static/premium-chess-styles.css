@@ -801,20 +801,35 @@ body {
   }
 
   .game-content {
-    padding: 2rem;
-    margin: 1rem;
+    padding: 1.25rem;
+    margin: 0.5rem;
+  }
+
+  .game-title {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
   }
 
   .squares-container {
     flex-direction: row;
     justify-content: center;
     gap: 1.5rem;
+    margin-bottom: 1.25rem;
   }
 
   .square-display {
     width: 90px;
     height: 90px;
     font-size: 1.8rem;
+  }
+
+  .question-section {
+    margin-bottom: 1.25rem;
+  }
+
+  .question-text {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
   }
 
   .options-grid {
@@ -829,10 +844,21 @@ body {
     font-size: 1.1rem;
   }
 
+  .navigation-section {
+    margin-top: 1rem;
+  }
+
   .nav-link {
     padding: 0.875rem 1.5rem;
     font-size: 0.9rem;
     margin: 0.25rem;
+  }
+
+  .alert {
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    border-radius: 12px;
   }
 
   .mini-chessboard {
@@ -864,12 +890,40 @@ body {
     border-radius: 15px;
   }
 
+  .game-container {
+    padding: 0.75rem;
+  }
+
+  .game-content {
+    padding: 1rem;
+    margin: 0;
+    border-radius: 16px;
+  }
+
   .game-title {
-    font-size: 2rem;
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .squares-container {
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .square-display {
+    width: 80px;
+    height: 80px;
+    font-size: 1.6rem;
+    border-radius: 12px;
+  }
+
+  .question-section {
+    margin-bottom: 1rem;
   }
 
   .question-text {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
   }
 
   .options-grid {
@@ -877,9 +931,18 @@ body {
   }
 
   .option-button {
-    min-width: 60px;
-    padding: 0.75rem 1rem;
-    font-size: 1.1rem;
+    min-width: 55px;
+    padding: 0.625rem 0.875rem;
+    font-size: 1rem;
+  }
+
+  .navigation-section {
+    margin-top: 0.75rem;
+  }
+
+  .nav-link {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.85rem;
   }
 
   .mini-chessboard {

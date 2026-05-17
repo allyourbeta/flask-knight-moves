@@ -42,36 +42,13 @@
           {{ message }}
         </div>
 
-        {% if (piece == "Knight" or piece == "Bishop") and path %}
-        <div
-          style="
-            text-align: center;
-            margin-bottom: 2rem;
-            padding: 1.5rem;
-            background: var(--surface-light);
-            border-radius: 16px;
-            border: 1px solid var(--border-subtle);
-          "
-        >
-          <p
-            style="
-              font-size: 1.25rem;
-              color: var(--text-primary);
-              font-family: 'Inter', monospace;
-            "
-          >
-            {{ ' → '.join(path) }}
-          </p>
-        </div>
-        {% endif %}
-
         <div
           id="chessboard-container"
           data-piece="{{ piece }}"
           data-start="{{ start_square }}"
           data-end="{{ end_square }}"
           data-path="{{ path|join(',') if path else '' }}"
-          style="margin-bottom: 2rem"
+          style="margin-bottom: 1rem"
         ></div>
 
         <div class="navigation-section">

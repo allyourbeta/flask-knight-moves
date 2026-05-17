@@ -115,7 +115,7 @@ def knight_game():
         path = session.get('path')
 
         if user_moves == correct_moves:
-            message = f"Correct. The Knight can move from {square_a} to {square_b} in {correct_moves} move{'s' if correct_moves != 1 else ''}."
+            message = "Correct!"
             return render_template('result.html', correct=True, message=message,
                                    square_a=square_a, square_b=square_b,
                                    correct_moves=correct_moves, piece="Knight",
@@ -171,10 +171,7 @@ def bishop_game():
         path = session.get('bishop_path')
 
         if user_moves == correct_moves:
-            if correct_moves == -1:
-                message = "Correct. The Bishop cannot change colors."
-            else:
-                message = f"Correct. The Bishop can move from {square_a} to {square_b} in {correct_moves} move{'s' if correct_moves != 1 else ''}."
+            message = "Correct!"
             return render_template('result.html', correct=True, message=message,
                                    square_a=square_a, square_b=square_b,
                                    correct_moves=correct_moves, piece="Bishop",
@@ -239,7 +236,7 @@ def color_game():
         square = session.get('square')
 
         if user_color == correct_color:
-            message = f"Correct. {square} is a {correct_color} square."
+            message = "Correct!"
             return render_template('result.html', correct=True, message=message,
                                    square_a=square, correct_color=correct_color,
                                    start_square=square, end_square=square,
