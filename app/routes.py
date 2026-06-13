@@ -136,13 +136,8 @@ def knight_game():
             
             return render_template('knight_game.html', square_a=square_a, square_b=square_b, message=error_message, correct_moves=session.get('correct_moves'))
 
-    files = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
-    ranks = ['1', '2', '3', '4', '5', '6', '7', '8']
-    square_a = random.choice(files) + random.choice(ranks)
-    square_b = random.choice(files) + random.choice(ranks)
-
-    while square_b == square_a:
-        square_b = random.choice(files) + random.choice(ranks)
+    square_a, square_b = _fresh_two()
+    _remember_squares(square_a, square_b)
 
     path = knight_path(square_a, square_b)
     correct_moves = len(path) - 1
@@ -195,12 +190,8 @@ def bishop_game():
 
     files = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
     ranks = ['1', '2', '3', '4', '5', '6', '7', '8']
-    square_a = random.choice(files) + random.choice(ranks)
-    square_b = random.choice(files) + random.choice(ranks)
-
-    while square_b == square_a:
-        square_b = random.choice(files) + random.choice(ranks)
-
+    square_a, square_b = _fresh_two()
+    _remember_squares(square_a, square_b)
 
     file_diff = abs(files.index(square_a[0]) - files.index(square_b[0]))
     rank_diff = abs(int(square_a[1]) - int(square_b[1]))
@@ -260,7 +251,8 @@ def color_game():
     # Generate a random square
     files = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
     ranks = ['1', '2', '3', '4', '5', '6', '7', '8']
-    square = random.choice(files) + random.choice(ranks)
+    square = _fresh_square()
+    _remember_squares(square)
 
     # Determine the correct color
     file_index = files.index(square[0])
@@ -296,6 +288,36 @@ def _rand_two():
     return a, b
 
 
+RECENT_LIMIT = 20  # don't reuse a square seen in the last 20 picks
+
+
+def _recent_squares():
+    r = session.get('recent_squares')
+    return r if isinstance(r, list) else []
+
+
+def _remember_squares(*squares):
+    # Queue behavior: push new picks on the end, drop anything past the window.
+    r = _recent_squares() + list(squares)
+    session['recent_squares'] = r[-RECENT_LIMIT:]
+
+
+def _fresh_square(also_avoid=()):
+    # Set behavior: O(1) membership test against the recent window.
+    avoid = set(_recent_squares()) | set(also_avoid)
+    for _ in range(200):  # safety cap; 64 - 20 leaves plenty of choices
+        s = _rand_square()
+        if s not in avoid:
+            return s
+    return _rand_square()  # pathological fallback (should never hit)
+
+
+def _fresh_two():
+    a = _fresh_square()
+    b = _fresh_square(also_avoid=(a,))
+    return a, b
+
+
 def _knight_hint(n):
     if n == 1:
         return "Incorrect. Try again."
@@ -328,7 +350,8 @@ def _color_hint(n):
 
 @app.route('/api/knight/new')
 def api_knight_new():
-    a, b = _rand_two()
+    a, b = _fresh_two()
+    _remember_squares(a, b)
     path = knight_path(a, b)
     session['correct_moves'] = len(path) - 1
     session['square_a'] = a
@@ -355,7 +378,8 @@ def api_knight_check():
 
 @app.route('/api/bishop/new')
 def api_bishop_new():
-    a, b = _rand_two()
+    a, b = _fresh_two()
+    _remember_squares(a, b)
     file_diff = abs(_FILES.index(a[0]) - _FILES.index(b[0]))
     rank_diff = abs(int(a[1]) - int(b[1]))
     if file_diff == rank_diff and file_diff > 0:
@@ -389,7 +413,8 @@ def api_bishop_check():
 
 @app.route('/api/color/new')
 def api_color_new():
-    square = _rand_square()
+    square = _fresh_square()
+    _remember_squares(square)
     file_index = _FILES.index(square[0])
     rank_index = int(square[1]) - 1
     correct_color = 'dark' if (file_index + rank_index) % 2 == 0 else 'light'
