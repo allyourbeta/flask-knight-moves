@@ -9,7 +9,7 @@
 // posts to the server and renders the old result/hint pages).
 (function () {
   var ADVANCE_DELAY_MS = 1900;       // knight/bishop: time to view the path board
-  var COLOR_ADVANCE_DELAY_MS = 750;  // color: no board, advance quickly
+  var COLOR_ADVANCE_DELAY_MS = 1300;  // color: static board, brief view before advancing
 
   var body = document.body;
   var GAME = body.classList.contains("game-knight") ? "knight"
@@ -173,7 +173,13 @@
       try { new MiniChessboard("chessboard-container"); } catch (e) {}
       scheduleNext(ADVANCE_DELAY_MS);
     } else {
-      boardWrap.style.display = "none";
+      // Color drill: no path, so show the board with just the square highlighted.
+      boardWrap.style.display = "";
+      boardWrap.dataset.piece = "Square";
+      boardWrap.dataset.start = data.square || "";
+      boardWrap.dataset.end = data.square || "";
+      boardWrap.dataset.path = "";
+      try { new MiniChessboard("chessboard-container"); } catch (e) {}
       scheduleNext(COLOR_ADVANCE_DELAY_MS);
     }
   }
