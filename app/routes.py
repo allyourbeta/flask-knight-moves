@@ -1,4 +1,4 @@
-from flask import render_template, request, session
+from flask import render_template, request, session, jsonify
 from app import app
 import random
 
@@ -273,3 +273,139 @@ def color_game():
     session['color_attempts'] = 0  # Reset attempt counter for new game
 
     return render_template('color_game.html', square=square, correct_color=session.get('correct_color'))
+
+# ---------------------------------------------------------------------------
+# JSON API for the no-reload (single-page) game flow.
+# These endpoints reuse the same path/answer logic as the HTML routes above.
+# The HTML GET/POST routes remain intact as a no-JavaScript fallback.
+# ---------------------------------------------------------------------------
+
+_FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+_RANKS = ['1', '2', '3', '4', '5', '6', '7', '8']
+
+
+def _rand_square():
+    return random.choice(_FILES) + random.choice(_RANKS)
+
+
+def _rand_two():
+    a = _rand_square()
+    b = _rand_square()
+    while b == a:
+        b = _rand_square()
+    return a, b
+
+
+def _knight_hint(n):
+    if n == 1:
+        return "Incorrect. Try again."
+    if n == 2:
+        return "Still incorrect. Think about the knight's L-shaped moves."
+    if n == 3:
+        return "Not quite right. Remember, knights move in an L: 2 squares in one direction, 1 in perpendicular."
+    return "Incorrect attempt #%d. Keep trying - you've got this." % n
+
+
+def _bishop_hint(n):
+    if n == 1:
+        return "Incorrect. Try again."
+    if n == 2:
+        return "Still incorrect. Think about diagonal movement patterns."
+    if n == 3:
+        return "Not quite right. Bishops only move diagonally and can't change square colors."
+    return "Incorrect attempt #%d. Consider the diagonal paths." % n
+
+
+def _color_hint(n):
+    if n == 1:
+        return "Incorrect. Try again."
+    if n == 2:
+        return "Still incorrect. Think about the checkerboard pattern."
+    if n == 3:
+        return "Not quite right. Remember: a1 is a dark square, pattern alternates from there."
+    return "Incorrect attempt #%d. Visualize the board pattern." % n
+
+
+@app.route('/api/knight/new')
+def api_knight_new():
+    a, b = _rand_two()
+    path = knight_path(a, b)
+    session['correct_moves'] = len(path) - 1
+    session['square_a'] = a
+    session['square_b'] = b
+    session['path'] = path
+    session['knight_attempts'] = 0
+    return jsonify(square_a=a, square_b=b)
+
+
+@app.route('/api/knight/check', methods=['POST'])
+def api_knight_check():
+    data = request.get_json(silent=True) or {}
+    try:
+        user = int(data.get('answer'))
+    except (TypeError, ValueError):
+        return jsonify(error='invalid'), 400
+    if user == session.get('correct_moves'):
+        return jsonify(correct=True, piece='Knight', path=session.get('path'),
+                       square_a=session.get('square_a'), square_b=session.get('square_b'))
+    n = session.get('knight_attempts', 0) + 1
+    session['knight_attempts'] = n
+    return jsonify(correct=False, attempts=n, message=_knight_hint(n))
+
+
+@app.route('/api/bishop/new')
+def api_bishop_new():
+    a, b = _rand_two()
+    file_diff = abs(_FILES.index(a[0]) - _FILES.index(b[0]))
+    rank_diff = abs(int(a[1]) - int(b[1]))
+    if file_diff == rank_diff and file_diff > 0:
+        correct, path = 1, bishop_path(a, b)
+    elif (file_diff + rank_diff) % 2 == 0:
+        correct, path = 2, bishop_2_move_path(a, b)
+    else:
+        correct, path = -1, None
+    session['correct_moves'] = correct
+    session['square_a'] = a
+    session['square_b'] = b
+    session['bishop_path'] = path
+    session['bishop_attempts'] = 0
+    return jsonify(square_a=a, square_b=b)
+
+
+@app.route('/api/bishop/check', methods=['POST'])
+def api_bishop_check():
+    data = request.get_json(silent=True) or {}
+    try:
+        user = int(data.get('answer'))
+    except (TypeError, ValueError):
+        return jsonify(error='invalid'), 400
+    if user == session.get('correct_moves'):
+        return jsonify(correct=True, piece='Bishop', path=session.get('bishop_path'),
+                       square_a=session.get('square_a'), square_b=session.get('square_b'))
+    n = session.get('bishop_attempts', 0) + 1
+    session['bishop_attempts'] = n
+    return jsonify(correct=False, attempts=n, message=_bishop_hint(n))
+
+
+@app.route('/api/color/new')
+def api_color_new():
+    square = _rand_square()
+    file_index = _FILES.index(square[0])
+    rank_index = int(square[1]) - 1
+    correct_color = 'dark' if (file_index + rank_index) % 2 == 0 else 'light'
+    session['correct_color'] = correct_color
+    session['square'] = square
+    session['color_attempts'] = 0
+    return jsonify(square=square)
+
+
+@app.route('/api/color/check', methods=['POST'])
+def api_color_check():
+    data = request.get_json(silent=True) or {}
+    user = (data.get('answer') or '').strip()
+    if user == session.get('correct_color'):
+        return jsonify(correct=True, square=session.get('square'),
+                       correct_color=session.get('correct_color'))
+    n = session.get('color_attempts', 0) + 1
+    session['color_attempts'] = n
+    return jsonify(correct=False, attempts=n, message=_color_hint(n))
