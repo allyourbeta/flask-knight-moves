@@ -3,8 +3,8 @@
 // correct answer the page already knows (body[data-correct]), THEN lets the form
 // submit as normal. Purely additive: no change to how the server validates answers.
 (function () {
-  var SUBMIT_DELAY_MS = 300; // wait before the page changes, so the sound can play
-  var LEAD = 0.1;            // silent runway (s) so a just-woken audio engine doesn't clip the first note
+  var SUBMIT_DELAY_MS = 420; // wait before navigating, long enough for the sound to finish
+  var LEAD = 0.07;           // silent runway (s) so a just-woken audio engine doesn't clip the first note
 
   var ctx;
   function audio() {
@@ -53,6 +53,17 @@
   function playWrong() {
     // Soft low buzz.
     blip([[180, 0, 0.2, "square", 0.12]]);
+  }
+
+  // Fully stop and release audio. Called right before the page navigates so a
+  // sound can never linger and bleed into the next page's sound.
+  function stopAudio() {
+    try {
+      if (ctx) {
+        ctx.close();
+        ctx = null;
+      }
+    } catch (err) {}
   }
 
   // Construct the audio engine right away so it is initialized well before the
@@ -112,6 +123,7 @@
         form.appendChild(hidden);
 
         setTimeout(function () {
+          stopAudio();
           form.submit();
         }, SUBMIT_DELAY_MS);
       });
