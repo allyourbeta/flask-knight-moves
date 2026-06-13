@@ -3,7 +3,8 @@
 // correct answer the page already knows (body[data-correct]), THEN lets the form
 // submit as normal. Purely additive: no change to how the server validates answers.
 (function () {
-  var SUBMIT_DELAY_MS = 200; // let the blip sound before the page changes
+  var SUBMIT_DELAY_MS = 300; // wait before the page changes, so the sound can play
+  var LEAD = 0.1;            // silent runway (s) so a just-woken audio engine doesn't clip the first note
 
   var ctx;
   function audio() {
@@ -26,7 +27,7 @@
   function blip(notes, attack) {
     var c = audio();
     if (!c) return;
-    var now = c.currentTime;
+    var now = c.currentTime + LEAD;
     var atk = attack || 0.012;
     notes.forEach(function (n) {
       var freq = n[0], t = n[1], dur = n[2], type = n[3] || "sine", peak = n[4] || 0.18;
@@ -54,15 +55,28 @@
     blip([[180, 0, 0.2, "square", 0.12]]);
   }
 
-  // Warm the audio context up on the very first interaction so the first
-  // answer sound is reliable on iOS.
+  // Construct the audio engine right away so it is initialized well before the
+  // first tap, then fully wake it (resume + a brief silent primer) on the first
+  // user gesture so cold-start latency doesn't swallow the start of a sound.
+  audio();
   function warm() {
-    audio();
-    document.removeEventListener("pointerdown", warm);
-    document.removeEventListener("touchstart", warm);
+    var c = audio();
+    if (c) {
+      try {
+        var o = c.createOscillator();
+        var g = c.createGain();
+        g.gain.value = 0.0001;
+        o.connect(g);
+        g.connect(c.destination);
+        o.start();
+        o.stop(c.currentTime + 0.03);
+      } catch (err) {}
+    }
+    document.removeEventListener("pointerdown", warm, true);
+    document.removeEventListener("touchstart", warm, true);
   }
-  document.addEventListener("pointerdown", warm);
-  document.addEventListener("touchstart", warm, { passive: true });
+  document.addEventListener("pointerdown", warm, true);
+  document.addEventListener("touchstart", warm, { passive: true, capture: true });
 
   function wire() {
     var correct = document.body.getAttribute("data-correct");
