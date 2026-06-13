@@ -23,10 +23,11 @@
   }
 
   // Play a sequence of notes: [freq, startOffsetSec, durSec, waveform, peakGain]
-  function blip(notes) {
+  function blip(notes, attack) {
     var c = audio();
     if (!c) return;
     var now = c.currentTime;
+    var atk = attack || 0.012;
     notes.forEach(function (n) {
       var freq = n[0], t = n[1], dur = n[2], type = n[3] || "sine", peak = n[4] || 0.18;
       var osc = c.createOscillator();
@@ -35,7 +36,7 @@
       osc.frequency.value = freq;
       var start = now + t;
       gain.gain.setValueAtTime(0.0001, start);
-      gain.gain.exponentialRampToValueAtTime(peak, start + 0.012);
+      gain.gain.exponentialRampToValueAtTime(peak, start + atk);
       gain.gain.exponentialRampToValueAtTime(0.0001, start + dur);
       osc.connect(gain);
       gain.connect(c.destination);
@@ -45,8 +46,8 @@
   }
 
   function playCorrect() {
-    // "Warm" rising blip (triangle wave, two notes up a fifth).
-    blip([[660, 0, 0.11, "triangle", 0.2], [990, 0.09, 0.14, "triangle", 0.2]]);
+    // Rounded rising blip: two triangle notes (C5 -> G5) with a soft attack.
+    blip([[523, 0, 0.17, "triangle", 0.16], [784, 0.1, 0.24, "triangle", 0.16]], 0.022);
   }
   function playWrong() {
     // Soft low buzz.
