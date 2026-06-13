@@ -15,7 +15,7 @@
       gtag('config', 'G-LP35D8LBWQ');
     </script>
 </head>
-<body class="game-page game-bishop">
+<body class="game-page game-bishop" data-correct="{{ correct_moves }}">
     <div class="game-container">
         <div class="game-content">
             <h1 class="game-title">Bishop Training</h1>
@@ -50,5 +50,6 @@
     </div>
     <script src="{{ url_for('static', filename='js/keyboard-input.js') }}"></script>
     <script src="{{ url_for('static', filename='js/auto-advance.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/sounds.js') }}"></script>
 </body>
 </html>

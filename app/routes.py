@@ -108,7 +108,7 @@ def knight_game():
             error_message = "Invalid input. Please select a valid number of moves."
             square_a = session.get('square_a', 'a1')
             square_b = session.get('square_b', 'a2')
-            return render_template('knight_game.html', square_a=square_a, square_b=square_b, message=error_message)
+            return render_template('knight_game.html', square_a=square_a, square_b=square_b, message=error_message, correct_moves=session.get('correct_moves'))
         correct_moves = session.get('correct_moves')
         square_a = session.get('square_a')
         square_b = session.get('square_b')
@@ -134,7 +134,7 @@ def knight_game():
             else:
                 error_message = f"Incorrect attempt #{attempt_count}. Keep trying - you've got this."
             
-            return render_template('knight_game.html', square_a=square_a, square_b=square_b, message=error_message)
+            return render_template('knight_game.html', square_a=square_a, square_b=square_b, message=error_message, correct_moves=session.get('correct_moves'))
 
     files = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
     ranks = ['1', '2', '3', '4', '5', '6', '7', '8']
@@ -153,7 +153,7 @@ def knight_game():
     session['path'] = path
     session['knight_attempts'] = 0  # Reset attempt counter for new game
 
-    return render_template('knight_game.html', square_a=square_a, square_b=square_b)
+    return render_template('knight_game.html', square_a=square_a, square_b=square_b, correct_moves=session.get('correct_moves'))
 
 @app.route('/bishop_game', methods=['GET', 'POST'])
 def bishop_game():
@@ -164,7 +164,7 @@ def bishop_game():
             error_message = "Invalid input. Please select a valid number of moves."
             square_a = session.get('square_a', 'a1')
             square_b = session.get('square_b', 'a2')
-            return render_template('bishop_game.html', square_a=square_a, square_b=square_b, message=error_message)
+            return render_template('bishop_game.html', square_a=square_a, square_b=square_b, message=error_message, correct_moves=session.get('correct_moves'))
         correct_moves = session.get('correct_moves')
         square_a = session.get('square_a')
         square_b = session.get('square_b')
@@ -191,7 +191,7 @@ def bishop_game():
             else:
                 error_message = f"Incorrect attempt #{attempt_count}. Consider the diagonal paths."
             
-            return render_template('bishop_game.html', square_a=square_a, square_b=square_b, message=error_message)
+            return render_template('bishop_game.html', square_a=square_a, square_b=square_b, message=error_message, correct_moves=session.get('correct_moves'))
 
     files = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
     ranks = ['1', '2', '3', '4', '5', '6', '7', '8']
@@ -225,7 +225,7 @@ def bishop_game():
     session['bishop_path'] = path
     session['bishop_attempts'] = 0  # Reset attempt counter for new game
 
-    return render_template('bishop_game.html', square_a=square_a, square_b=square_b)
+    return render_template('bishop_game.html', square_a=square_a, square_b=square_b, correct_moves=session.get('correct_moves'))
 
 
 @app.route('/color_game', methods=['GET', 'POST'])
@@ -255,7 +255,7 @@ def color_game():
             else:
                 error_message = f"Incorrect attempt #{attempt_count}. Visualize the board pattern."
             
-            return render_template('color_game.html', square=square, message=error_message)
+            return render_template('color_game.html', square=square, message=error_message, correct_color=session.get('correct_color'))
 
     # Generate a random square
     files = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
@@ -272,4 +272,4 @@ def color_game():
     session['square'] = square
     session['color_attempts'] = 0  # Reset attempt counter for new game
 
-    return render_template('color_game.html', square=square)
+    return render_template('color_game.html', square=square, correct_color=session.get('correct_color'))
