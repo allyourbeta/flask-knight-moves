@@ -93,7 +93,7 @@ class MiniChessboard {
                     align-items: center;
                     justify-content: center;
                     font-weight: bold;
-                    font-size: 10px;
+                    font-size: 12px;
                     color: ${isLight ? "#8b4513" : "#f0d9b5"};
                     transition: all 0.3s ease;
                 `;

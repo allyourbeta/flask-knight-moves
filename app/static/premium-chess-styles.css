@@ -733,18 +733,16 @@ body {
   background: linear-gradient(135deg, #8b4513 0%, #a0522d 100%);
   border-radius: 16px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-  animation: fadeInUp 0.8s ease-out;
+  animation: fadeIn 0.15s ease-out;
   border: 2px solid var(--accent-gold);
 }
 
-@keyframes fadeInUp {
+@keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(30px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
@@ -1073,6 +1071,42 @@ body {
   .game-color  .options-grid { grid-template-columns: 1fr; grid-template-rows: minmax(0, 1fr) minmax(0, 1fr); }
   .game-bishop .options-grid { grid-template-columns: 1fr; grid-auto-rows: minmax(0, 1fr); }
   .game-knight .options-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: minmax(0, 1fr); }
+
+  /* Raised "key" pads with a subtle press. Color set per drill via
+     --pad-bg / --pad-edge below. Depth kept gentle (4px ledge) so it
+     reads tactile, not cartoonish. The color game keeps its inline
+     white/black fills; only the edge + press are added there. */
+  .game-page .option-button {
+    background: var(--pad-bg);
+    border: none;
+    box-shadow: 0 4px 0 var(--pad-edge, #111),
+                0 6px 10px rgba(0, 0, 0, 0.35),
+                inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    transition: transform 0.08s ease, box-shadow 0.08s ease;
+  }
+  /* Neutralize the desktop gold hover (it sticks after a tap on touch). */
+  .game-page .option-button:hover {
+    background: var(--pad-bg);
+    transform: none;
+  }
+  .game-page .option-button:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 var(--pad-edge, #111),
+                0 2px 5px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+
+  /* Per-piece colors, matching the home-menu coding. */
+  .game-knight .option-button {
+    --pad-bg: linear-gradient(#4ea8df, #3498db 60%, #2f88c6);
+    --pad-edge: #1f618d;
+    color: #ffffff;
+  }
+  .game-bishop .option-button {
+    --pad-bg: linear-gradient(#b07cc9, #9b59b6 60%, #854a9e);
+    --pad-edge: #5e3a72;
+    color: #ffffff;
+  }
 }
 
 /* Short landscape phones (<=768px wide): trim the prompt block so
