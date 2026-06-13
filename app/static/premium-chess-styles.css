@@ -976,3 +976,116 @@ body {
     display: none !important;
   }
 }
+
+/* ============================================================
+   Mobile portrait: full-height, no-scroll game screens.
+   Scoped to .game-page (the three drill templates) so the
+   home page and result page are untouched. Desktop (>768px)
+   keeps the original centered-card layout entirely.
+   ============================================================ */
+@media (max-width: 768px) {
+  /* Make the screen exactly one viewport tall. 100svh = the
+     "small" viewport (browser bars showing) so content always
+     fits even when the address bar is visible -> no scroll.
+     100vh kept first as a fallback for old browsers. */
+  .game-page .game-container {
+    min-height: 100vh;
+    min-height: 100svh;
+    height: 100svh;
+    padding: 0;
+    align-items: stretch;
+  }
+
+  /* Full-bleed flex column. Padding respects notch / home-bar
+     safe areas so nothing hides behind hardware. */
+  .game-page .game-content {
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+    padding: calc(env(safe-area-inset-top, 0px) + 1rem)
+             calc(env(safe-area-inset-right, 0px) + 1rem)
+             calc(env(safe-area-inset-bottom, 0px) + 0.75rem)
+             calc(env(safe-area-inset-left, 0px) + 1rem);
+  }
+
+  /* Compact prompt block so the buttons get the space. */
+  .game-page .game-title { font-size: 1.5rem; margin-bottom: 0.75rem; }
+  .game-page .squares-container { gap: 1rem; margin-bottom: 0.75rem; }
+  .game-page .square-display {
+    width: 64px; height: 64px; font-size: 1.75rem; border-radius: 12px;
+  }
+  .game-page .alert {
+    padding: 0.75rem 1rem; margin-bottom: 0.75rem; font-size: 0.95rem;
+  }
+
+  /* The answer region absorbs ALL leftover vertical space.
+     min-height:0 lets it shrink on short phones instead of
+     overflowing. This is what guarantees no scroll. */
+  .game-page .question-section {
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+  .game-page .question-text { font-size: 1.1rem; margin-bottom: 0.75rem; }
+  .game-page .question-section form {
+    flex: 1 1 auto; display: flex; min-height: 0;
+  }
+  .game-page .options-grid {
+    flex: 1 1 auto;
+    display: grid;
+    gap: 0.75rem;
+    width: 100%;
+    min-height: 0;
+    flex-wrap: nowrap;
+  }
+
+  /* Buttons fill their grid cell -> huge, easy targets,
+     keeping their borders so they still read as buttons. */
+  .game-page .option-button {
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+    margin: 0;
+    padding: 0.5rem;
+    font-size: clamp(1.25rem, 7vw, 2.75rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Small back link pinned at the very bottom, clear of targets. */
+  .game-page .navigation-section {
+    margin-top: 0.75rem; margin-bottom: 0; flex: 0 0 auto;
+  }
+  .game-page .nav-link {
+    padding: 0.5rem 1rem; font-size: 0.9rem; margin: 0;
+  }
+
+  /* Per-drill arrangements, sized to button count. */
+  .game-color  .options-grid { grid-template-columns: 1fr; grid-template-rows: minmax(0, 1fr) minmax(0, 1fr); }
+  .game-bishop .options-grid { grid-template-columns: 1fr; grid-auto-rows: minmax(0, 1fr); }
+  .game-knight .options-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: minmax(0, 1fr); }
+}
+
+/* Short landscape phones (<=768px wide): trim the prompt block so
+   the fill layout still fits with no scroll. Wider phones in
+   landscape fall back to the desktop centered layout. */
+@media (max-width: 768px) and (orientation: landscape) {
+  .game-page .game-content {
+    padding-top: calc(env(safe-area-inset-top, 0px) + 0.5rem);
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 0.5rem);
+  }
+  .game-page .game-title { font-size: 1.1rem; margin-bottom: 0.4rem; }
+  .game-page .squares-container { margin-bottom: 0.4rem; gap: 0.75rem; }
+  .game-page .square-display { width: 44px; height: 44px; font-size: 1.25rem; }
+  .game-page .question-text { font-size: 0.95rem; margin-bottom: 0.4rem; }
+  .game-page .navigation-section { margin-top: 0.4rem; }
+}
