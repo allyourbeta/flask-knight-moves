@@ -1103,8 +1103,8 @@ body {
     color: #ffffff;
   }
   .game-bishop .option-button {
-    --pad-bg: linear-gradient(#b07cc9, #9b59b6 60%, #854a9e);
-    --pad-edge: #5e3a72;
+    --pad-bg: linear-gradient(#4ea8df, #3498db 60%, #2f88c6);
+    --pad-edge: #1f618d;
     color: #ffffff;
   }
 }
