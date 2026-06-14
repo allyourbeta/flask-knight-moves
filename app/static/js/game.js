@@ -92,10 +92,10 @@
     "flex:1 1 auto;min-height:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;width:100%;";
   var boardWrap = document.createElement("div");
   boardWrap.id = "chessboard-container";
-  boardWrap.style.cssText = "width:100%;max-width:300px;";
+  boardWrap.style.cssText = "width:100%;max-width:320px;";
   var nextBtn = document.createElement("button");
   nextBtn.type = "button";
-  nextBtn.className = "nav-link primary";
+  nextBtn.className = "nav-link primary result-next";
   nextBtn.textContent = "Next \u2192";
   nextBtn.style.display = "none";
   resultArea.appendChild(boardWrap);
@@ -152,15 +152,17 @@
     boardWrap.innerHTML = "";
     nextBtn.style.display = "none";
     questionSection.style.display = "";
+    squaresContainer.style.display = "";
     clearFlash();
     setButtons(false);
   }
 
   function onCorrect(data) {
     inResult = true;
-    feedback.textContent = "Correct!";
-    feedback.className = "alert alert-success js-feedback";
+    feedback.textContent = "CORRECT!";
+    feedback.className = "alert alert-success js-feedback result-correct";
     feedback.style.display = "";
+    squaresContainer.style.display = "none";
     questionSection.style.display = "none";
     resultArea.style.display = "flex";
     boardWrap.innerHTML = "";
