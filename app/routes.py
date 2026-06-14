@@ -190,7 +190,7 @@ def bishop_game():
 
     files = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
     ranks = ['1', '2', '3', '4', '5', '6', '7', '8']
-    square_a, square_b = _fresh_two()
+    square_a, square_b = _fresh_two_bishop()
     _remember_squares(square_a, square_b)
 
     file_diff = abs(files.index(square_a[0]) - files.index(square_b[0]))
@@ -318,6 +318,27 @@ def _fresh_two():
     return a, b
 
 
+def _is_orthogonal_adjacent(a, b):
+    """True if b is directly left/right/up/down of a (a straight one-step
+    neighbour). Diagonal neighbours are NOT orthogonal-adjacent."""
+    fd = abs(_FILES.index(a[0]) - _FILES.index(b[0]))
+    rd = abs(int(a[1]) - int(b[1]))
+    return (fd == 1 and rd == 0) or (fd == 0 and rd == 1)
+
+
+def _fresh_two_bishop():
+    """Like _fresh_two, but reject an orthogonally-adjacent second square.
+    Such pairs are always opposite-coloured, so the bishop answer is always
+    the trivial "N/A". Diagonally-adjacent squares are kept (a real 1-move
+    question)."""
+    a = _fresh_square()
+    for _ in range(200):  # safety cap; at most ~4 neighbours excluded
+        b = _fresh_square(also_avoid=(a,))
+        if not _is_orthogonal_adjacent(a, b):
+            return a, b
+    return a, b  # pathological fallback (should never hit)
+
+
 def _knight_hint(n):
     if n == 1:
         return "Incorrect. Try again."
@@ -378,7 +399,7 @@ def api_knight_check():
 
 @app.route('/api/bishop/new')
 def api_bishop_new():
-    a, b = _fresh_two()
+    a, b = _fresh_two_bishop()
     _remember_squares(a, b)
     file_diff = abs(_FILES.index(a[0]) - _FILES.index(b[0]))
     rank_diff = abs(int(a[1]) - int(b[1]))
