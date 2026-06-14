@@ -90,6 +90,10 @@
   var resultArea = document.createElement("div");
   resultArea.style.cssText =
     "flex:1 1 auto;min-height:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;width:100%;";
+  var verdict = document.createElement("div");
+  verdict.className = "alert alert-success js-feedback result-correct";
+  verdict.textContent = "CORRECT!";
+  verdict.style.display = "none";
   var boardWrap = document.createElement("div");
   boardWrap.id = "chessboard-container";
   boardWrap.style.cssText = "width:100%;max-width:320px;";
@@ -98,6 +102,7 @@
   nextBtn.className = "nav-link primary result-next";
   nextBtn.textContent = "Next \u2192";
   nextBtn.style.display = "none";
+  resultArea.appendChild(verdict);
   resultArea.appendChild(boardWrap);
   resultArea.appendChild(nextBtn);
   questionSection.parentNode.insertBefore(resultArea, questionSection.nextSibling);
@@ -148,6 +153,7 @@
     locked = false;
     clearTimeout(advanceTimer);
     feedback.style.display = "none";
+    verdict.style.display = "none";
     resultArea.style.display = "none";
     boardWrap.innerHTML = "";
     nextBtn.style.display = "none";
@@ -159,9 +165,8 @@
 
   function onCorrect(data) {
     inResult = true;
-    feedback.textContent = "CORRECT!";
-    feedback.className = "alert alert-success js-feedback result-correct";
-    feedback.style.display = "";
+    feedback.style.display = "none";
+    verdict.style.display = "";
     squaresContainer.style.display = "none";
     questionSection.style.display = "none";
     resultArea.style.display = "flex";
