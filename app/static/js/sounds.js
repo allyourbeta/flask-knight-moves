@@ -14,7 +14,11 @@
         if (!AC) return null;
         ctx = new AC();
       }
-      if (ctx.state === "suspended") {
+      // Resume on ANY non-running, non-closed state. iOS uses a non-standard
+      // "interrupted" state (not "suspended") after an outside interruption such
+      // as a Clock alarm or phone call; the old code only checked "suspended",
+      // so it never revived the engine after an alarm and beeps went silent.
+      if (ctx.state !== "running" && ctx.state !== "closed") {
         ctx.resume();
       }
       return ctx;
@@ -66,6 +70,21 @@
     } catch (err) {}
   }
 
+  // Make sure we have a context that can actually produce sound RIGHT NOW.
+  // Must be called synchronously inside a user gesture (the answer tap) so iOS
+  // permits it. If the context is wedged in "interrupted"/"suspended" and a
+  // resume() didn't take, we throw it away and build a fresh one -- the same
+  // recovery you get from force-quitting the app, but instant and invisible.
+  function ensureLiveContext() {
+    var c = audio(); // creates if missing; resumes if not running
+    if (c && c.state !== "running") {
+      try { c.close(); } catch (err) {}
+      ctx = null;
+      c = audio(); // brand-new context, created in-gesture
+    }
+    return c;
+  }
+
   // Construct the audio engine right away so it is initialized well before the
   // first tap, then fully wake it (resume + a brief silent primer) on the first
   // user gesture so cold-start latency doesn't swallow the start of a sound.
@@ -106,6 +125,9 @@
 
         var value = btn.getAttribute("value");
         try {
+          // Revive/rebuild the audio engine in-gesture before playing, so a
+          // post-alarm "interrupted" context can't silently swallow the beep.
+          ensureLiveContext();
           if (String(value).trim() === String(correct).trim()) {
             playCorrect();
           } else {
