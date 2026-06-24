@@ -27,7 +27,7 @@
         if (!AC) return null;
         ctx = new AC();
       }
-      if (ctx.state === "suspended") ctx.resume();
+      if (ctx.state !== "running" && ctx.state !== "closed") ctx.resume(); // also catches iOS "interrupted" (post-alarm/call)
       return ctx;
     } catch (e) { return null; }
   }
@@ -221,6 +221,9 @@
     if (locked) return;
     locked = true;
     setButtons(true);
+    // In-gesture audio recovery: if an iOS alarm left our persistent context
+    // "interrupted", resume/rebuild it now so the beep below isn't muted. No-op normally.
+    try { var ac = audio(); if (ac && ac.state !== "running") { try { ac.close(); } catch (e2) {} ctx = null; audio(); } } catch (e) {}
     fetch("/api/" + GAME + "/check", {
       method: "POST",
       credentials: "same-origin",
