@@ -187,7 +187,7 @@
       boardWrap.dataset.end = data.square || "";
       boardWrap.dataset.path = "";
       try { new MiniChessboard("chessboard-container"); } catch (e) {}
-      scheduleNext(COLOR_ADVANCE_DELAY_MS);
+      if (!(window.ChessSpeech && ChessSpeech.onColorCorrect(data, autoAdvance, nextBtn))) scheduleNext(COLOR_ADVANCE_DELAY_MS);
     }
   }
 
